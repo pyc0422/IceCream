@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ice Cream Shop</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+          .nav-a {
+            @apply text-black hover:underline hover:opacity-80 capitalize font-semibold text-lg
+          }
+          label{
+            @apply text-black text-sm font-semibold capitalize
+          }
+          input{
+            @apply text-black text-sm font-normal border rounded-md p-1 capitalize
+          }
+          .form-div{
+            @apply flex gap-6 justify-center items-center
+          }
+          #topping-container{
+            @apply flex flex-wrap border rounded-lg justify-center items-center p-8 gap-2
+          }
+          td{
+            @apply text-black text-sm font-semibold capitalize
+          }
+        }
+    </style>
+    <script>
+        const price = {
+            sprinkles: 0.50, cream:0.25, fudge:1.25, cherry:0.25
+        }
+        function submitBtnClicked() {
+            let base_price = 0;
+            const number = Number(document.getElementById('number').value);
+            base_price = base_price + 2.25 + (number - 1) * 1.25;
+            const type = document.getElementById('cone').checked ? 'cone' : 'cup';
+            const toppings = document.querySelectorAll('input[type="checkbox"]');
+            base_price = base_price + Array.from(toppings).reduce((acc, topping) => {
+                if(topping.checked) {
+                    acc += price[topping.name];
+                }
+                return acc;
+            }, 0);
+            const tax = base_price * 0.1025;
+            const total_price = base_price + tax;
+            return { base_price, tax, total_price };
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            const containerRadios = document.querySelectorAll('input[name="container"]');
+            const topping = document.getElementById('topping');
+            containerRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    topping.style.display = document.getElementById('cup').checked ? 'flex' : 'none';
+                });
+            });
+            const form = document.querySelector('form');
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                ({ base_price, tax, total_price } = submitBtnClicked());
+                document.getElementById('base-price').innerText = `$${base_price.toFixed(2)}`;
+                document.getElementById('tax').innerText = `$${tax.toFixed(2)}`;
+                document.getElementById('total-price').innerText = `$${total_price.toFixed(2)}`;
+            });
+        });
+    </script>
+</head>
+<body>
+    <nav class="bg-white bg-opacity-50 w-screen fixed top-0 h-20 shadow-md px-10 py-2 flex items-start jusitfy-start">
+        <div class="flex justify-center items-center m-2 p-4 gap-5">
+            <a href="index.html" class="nav-a">Home</a>
+        </div>
+    </nav>
+    <main class="mt-20 m-4 p-8 flex flex-col justify-center items-center">
+        <form class="flex flex-col gap-5 border rounded-lg m-2 p-10 w-1/2">
+            <div class="form-div">
+                <label for="number">Number of scoops</label>
+                <input type="number" name="number" id="number" min="1" max="10" required>
+            </div>
+            <div class="form-div">
+                <input type="radio" name="container" id="cone">
+                <label for="cone">cone</label>
+                <input type="radio" name="container" id="cup" selected>
+                <label for="cup">cup</label>
+            </div>
+            <div id="topping" class="hidden flex-col jusitfy-start items-start">
+                <p class="font-semibold capitalize text-left">Toppings</p>
+                <div id="topping-container">
+                    <label for="sprinkles"><input type="checkbox" name="sprinkles" id="sprinkles">sprinkles ($0.50)</label>
+                    <label for="cream"><input type="checkbox" name="cream" id="cream">wipped cream ($0.25)</label>
+                    <label for="fudge"><input type="checkbox" name="fudge" id="fudge">hot fudge ($1.25)</label>
+                    <label for="cherry"><input type="checkbox" name="cherry" id="cherry">cherry ($0.25)</label>
+                </div>
+                    
+            </div>
+            <button type="subbmit" class="border rounded-md px-6 py-1 font-semibold bg-gray-600 text-white hover:text-black hover:bg-gray-400 ">submit order</button>
+            <table class="justify-center items-center">
+                <tr><td>base price:</td><td id="base-price"></td></tr>
+                <tr><td>tax:</td><td id="tax"></td></tr>
+                <tr><td>total price:</td><td id="total-price"></td></tr>
+            </table>
+        </form>
+    </main>
+</body>
+</html>
