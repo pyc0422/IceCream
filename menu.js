@@ -20,17 +20,15 @@ window.onload = () => {
     let category = document.getElementById('category');
     category.addEventListener('change', (event) => {
         event.preventDefault();
-        let selectedCategory = event.target.value;
-        console.log('selectedCategory', selectedCategory);
-        const label = document.querySelector('label[for="items"]');
-        label.textContent = selectedCategory;
+        let selectedCategory = event.target.value || 'item';
         const items = document.getElementById('items');
-        items.innerHTML = '<option value="">select one</option>';
+        items.innerHTML = `<option value="">select one ${selectedCategory}</option>`;
+        if (selectedCategory == 'item') return;
         menu[selectedCategory].forEach((item) => {
             let itemEle = document.createElement('option');
             itemEle.textContent = item;
             items.appendChild(itemEle);
         })
-
+    
     })
 }
