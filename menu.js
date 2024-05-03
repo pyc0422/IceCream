@@ -25,6 +25,7 @@ window.onload = () => {
         const label = document.querySelector('label[for="items"]');
         label.textContent = selectedCategory;
         const items = document.getElementById('items');
+        items.innerHTML = '<option value="">select one</option>';
         menu[selectedCategory].forEach((item) => {
             let itemEle = document.createElement('option');
             itemEle.textContent = item;
