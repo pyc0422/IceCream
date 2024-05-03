@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Food Menu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+          .nav-a {
+            @apply text-black hover:underline hover:opacity-80 capitalize font-semibold text-lg
+          }
+          label{
+            @apply text-black text-sm font-semibold capitalize
+          }
+          .select-input{
+            @apply text-black text-sm font-normal border rounded-md p-1 capitalize
+          }
+          .form-div{
+            @apply flex gap-6 justify-center items-center
+          }
+          #topping-container{
+            @apply flex flex-wrap border rounded-lg justify-center items-center p-8 gap-2
+          }
+          td{
+            @apply text-black text-sm font-semibold capitalize
+          }
+        }
+    </style>
+    <script src="menu.js"></script>
+</head>
+<body>
+    <main class="mt-20 m-4 p-8 flex flex-col justify-center items-center">
+        <form class="flex flex-col gap-5 border rounded-lg m-2 p-10 w-1/2">
+            <div class="form-div">
+                <label for="category">category</label>
+                <select name="category" id="category" class="select-input">
+                    <option value="">select one</option>
+                    <option value="drinks">drinks</option>
+                    <option value="entrees">entrees</option>
+                    <option value="dessert">dessert</option>
+                </select>
+            </div>
+            <div class="form-div">
+                <label for="items">item</label>
+                <select name="item" id="items" class="select-input">
+                    <option value="">select one</option>
+                </select>
+            </div>
+           
+        </form>
+    </main>
+</body>
+</html>
